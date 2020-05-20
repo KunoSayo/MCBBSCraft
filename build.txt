@@ -1,0 +1,3 @@
+displayName = MCBBS Craft
+author = yinyangshi
+version = 0.1

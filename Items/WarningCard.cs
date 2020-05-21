@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -44,6 +44,31 @@ namespace MCBBSCraft.Items {
 
         public override void SetDefaults() {
             DisplayName.SetDefault("You're good.");
+        }
+
+        public override void Update(NPC npc, ref int buffIndex) {
+            var pos = npc.position;
+            Dust.NewDust(pos, 42, 34, ModContent.DustType<WarningCardDust>(), Scale: 2);
+        }
+    }
+
+    // ReSharper disable once ClassNeverInstantiated.Global #autoload
+    public class WarningCardDust : ModDust {
+        public override bool Autoload(ref string name, ref string texture) {
+            texture = texture.Replace("WarningCardDust", "WarningCard");
+            return true;
+        }
+
+        public override void OnSpawn(Dust dust) {
+            dust.velocity = Vector2.Zero;
+            dust.noGravity = true;
+        }
+
+        public override bool Update(Dust dust) {
+            if (!dust.firstFrame) {
+                dust.active = false;
+            }
+            return false;
         }
     }
 }
